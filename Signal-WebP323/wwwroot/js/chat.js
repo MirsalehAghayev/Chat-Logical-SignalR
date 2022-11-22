@@ -47,21 +47,26 @@ sendMessageForm.addEventListener("submit", function (element) {
     element.preventDefault();
 
     var user = JSON.parse(localStorage.getItem('user'));
-    var message = document.getElementById('message').value;
+    var message = document.getElementById('messages').value;
 
-    connection.invoke("SendMessage", user.name, user.group, user.message).catch(function (err) {
+    connection.invoke("SendMessage", user.name, user.group,message).catch(function (err) {
         return console.error(err.toString());
     });
-    document.getElementById('message').value = '';
+    
+    console.log(message);
 })
+var message = document.getElementById('messages').value;
 
-//connection.on("ReceiveMessage", function (username, message) {
-//    var li =
-//        //Bu hissesinde problem var
-//        document.getElementById("messeges").innerHTML += li);
+connection.on("ReceiveMessage", function (username, message) {
+    var li = `<li class="List-group-item"> 
+                    <b>${username}</b>
+                    <p>${message}</p>
+                </li>`;
+        
+        document.getElementById("messeges").innerHTML += li;
 
 
-//});
+});
 
 function ShowChatSection() {
     joinGroupSection.classList.add('d-none');
